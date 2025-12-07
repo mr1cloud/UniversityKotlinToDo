@@ -7,6 +7,7 @@ import com.example.universitykotlintodo.domain.usecase.GetTodosUseCase
 import com.example.universitykotlintodo.domain.usecase.ToggleTodoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class TodoViewModel(
@@ -23,7 +24,9 @@ class TodoViewModel(
     fun loadTodos() {
         viewModelScope.launch {
             val todos = getTodosUseCase()
-            _state.value = _state.value.copy(isLoading = false, todos = todos)
+            _state.update { current ->
+                current.copy(isLoading = false, todos = todos)
+            }
         }
     }
 
@@ -35,6 +38,8 @@ class TodoViewModel(
     }
 
     fun setDetailedView(todoItem: TodoItem?) {
-        _state.value = _state.value.copy(detailedView = todoItem)
+        _state.update { current ->
+            current.copy(detailedView = todoItem)
+        }
     }
 }

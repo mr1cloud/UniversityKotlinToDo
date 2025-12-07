@@ -6,21 +6,21 @@ import com.example.universitykotlintodo.domain.repository.TodoRepository
 
 class TodoRepositoryImpl(
     private val jsonSource: TodoJsonDataSource
-): TodoRepository{
+) : TodoRepository {
     private var todosCache = mutableListOf<TodoItem>()
 
     override suspend fun getTodos(): List<TodoItem> {
         if (todosCache.isEmpty()) {
             todosCache = jsonSource.getTodos().map { dto ->
-                    TodoItem(
-                        id = dto.id,
-                        title = dto.title,
-                        description = dto.description,
-                        isCompleted = dto.isCompleted
-                    )
-                }.toMutableList()
+                TodoItem(
+                    id = dto.id,
+                    title = dto.title,
+                    description = dto.description,
+                    isCompleted = dto.isCompleted
+                )
+            }.toMutableList()
         }
-        return todosCache
+        return todosCache.toList()
     }
 
     override suspend fun toggleTodo(id: Int) {
