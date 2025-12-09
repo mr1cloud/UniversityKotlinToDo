@@ -26,16 +26,7 @@ fun TaskListScreen(
     onTaskClick: (TodoItem) -> Unit,
     onTaskCheckedChange: (TodoItem, Boolean) -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFF5F5F5)
-                )
-            )
-        }
-    ) { padding ->
+    Scaffold { padding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
