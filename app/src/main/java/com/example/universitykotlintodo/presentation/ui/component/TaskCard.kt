@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,6 +32,7 @@ fun TaskCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .testTag("task_card_${task.id}")
             .clickable { onTaskClick() },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
@@ -46,6 +48,7 @@ fun TaskCard(
         ) {
             Checkbox(
                 checked = task.isCompleted,
+                modifier = Modifier.testTag("task_checkbox_${task.id}"),
                 onCheckedChange = onCheckedChange,
                 colors = CheckboxDefaults.colors(
                     checkedColor = Color(0xFF2196F3),
@@ -57,16 +60,19 @@ fun TaskCard(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
+                    modifier = Modifier.testTag("task_title_${task.id}"),
                     text = task.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color.Black
                 )
                 Text(
+                    modifier = Modifier
+                        .testTag("task_description_${task.id}")
+                        .padding(top = 4.dp),
                     text = task.description,
                     fontSize = 14.sp,
                     color = Color.Gray,
-                    modifier = Modifier.padding(top = 4.dp)
                 )
             }
         }
