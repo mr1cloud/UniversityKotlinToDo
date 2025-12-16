@@ -10,7 +10,7 @@ import com.example.universitykotlintodo.domain.usecase.GetTodosUseCase
 import com.example.universitykotlintodo.domain.usecase.ToggleTodoUseCase
 import com.example.universitykotlintodo.presentation.ui.screen.MainScreen
 import com.example.universitykotlintodo.presentation.ui.theme.UniversityKotlinToDoTheme
-import com.example.universitykotlintodo.presentation.viewmodel.TodoViewModel
+import com.example.universitykotlintodo.presentation.viewmodel.ViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         val getTodosUseCase = GetTodosUseCase(repository)
         val toggleTodoUseCase = ToggleTodoUseCase(repository)
 
-        val todoViewModel = TodoViewModel(
+        val viewModelFactory = ViewModelFactory(
             getTodosUseCase = getTodosUseCase,
             toggleTodoUseCase = toggleTodoUseCase
         )
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             UniversityKotlinToDoTheme {
                 MainScreen(
-                    todoViewModel = todoViewModel
+                    viewModelFactory = viewModelFactory
                 )
             }
         }

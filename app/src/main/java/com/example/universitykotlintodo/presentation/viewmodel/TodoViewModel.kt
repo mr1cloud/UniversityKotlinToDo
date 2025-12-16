@@ -14,7 +14,7 @@ class TodoViewModel(
     private val getTodosUseCase: GetTodosUseCase,
     private val toggleTodoUseCase: ToggleTodoUseCase
 ) : ViewModel() {
-    val _state = MutableStateFlow(TodoState(isLoading = true))
+    private val _state = MutableStateFlow(TodoState(isLoading = true))
     val state: StateFlow<TodoState> = _state
 
     init {

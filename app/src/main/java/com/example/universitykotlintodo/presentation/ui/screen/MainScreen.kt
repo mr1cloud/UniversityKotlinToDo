@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.universitykotlintodo.presentation.viewmodel.TodoViewModel
+import com.example.universitykotlintodo.presentation.viewmodel.ViewModelFactory
 
 enum class Screen {
     TaskList,
@@ -17,10 +18,16 @@ enum class Screen {
 
 @Composable
 fun MainScreen(
-    todoViewModel: TodoViewModel = viewModel(),
+    viewModelFactory: ViewModelFactory,
     navHostController: NavHostController = rememberNavController()
 ) {
+    val todoViewModel: TodoViewModel = viewModel(factory = viewModelFactory)
+
     val state by todoViewModel.state.collectAsState()
+
+    val detailedView = state.detailedView.let { todo ->
+        state.todos.find { it.id == todo?.id }
+    }
 
     NavHost(navHostController, startDestination = Screen.TaskList.name) {
         composable(Screen.TaskList.name) {
@@ -36,7 +43,6 @@ fun MainScreen(
             )
         }
         composable(Screen.TaskDetail.name) {
-            val detailedView = state.detailedView
             if (detailedView != null) {
                 TaskDetailScreen(
                     task = detailedView,
